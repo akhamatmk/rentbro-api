@@ -6,16 +6,15 @@ use Tymon\JWTAuth\JWTAuth;
 use Akhamatvarokah\Rentbro\Models\Mysql\UserEcommerce;
 use Akhamatvarokah\Rentbro\Models\Mysql\UserEcommerceAddres;
 use Illuminate\Support\Facades\Hash;
+use App\Transformers\UserTransformer;
 
 class UserController extends ApiController
 {
 	public function info(JWTAuth $JWTAuth)
 	{
-		$user =  $JWTAuth->parseToken()->authenticate();
+        $user =  $JWTAuth->parseToken()->authenticate();
         $token = $JWTAuth->getToken();
-        $user['shop'] = $user->shop;
-        $user['vendor'] = $user->vendor;
-        return $this->response()->success($user, ['meta.token' => (string) $token]);
+        return $this->response()->success($user, ['meta.token' => (string) $token] , 200, new UserTransformer(), 'item');
 	}
 
 	public function profile_edit(JWTAuth $JWTAuth)
