@@ -34,6 +34,7 @@ $router->post('user/profile/image/change', ['uses' => 'UserController@profile_im
 $router->post('user/profile/edit/validation', ['uses' => 'UserController@profile_edit_validation' , 'middleware' => ['jwtauth']]);
 $router->post('user/check/email', ['uses' => 'UserController@check_email']);
 $router->post('user/check/validation', ['uses' => 'UserController@validation']);
+$router->post('user/check/username', ['uses' => 'UserController@check_username' , 'middleware' => ['cors', 'jwtauth']]);
 
 $router->get('place/province', ['uses' => 'PlaceController@province' , 'middleware' => ['cors']]);
 $router->get('place/regency', ['uses' => 'PlaceController@regency' , 'middleware' => ['cors']]);

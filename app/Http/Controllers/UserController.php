@@ -98,6 +98,19 @@ class UserController extends ApiController
 			return $this->response()->success(['exist' => false]);
 	}
 
+	public function check_username(JWTAuth $JWTAuth)
+	{
+		$user =  $JWTAuth->parseToken()->authenticate();
+		$UserEcommerce = UserEcommerce::where('username', $this->request->username)->first();
+		if(! $UserEcommerce)
+			return $this->response()->success(true);
+
+		if($UserEcommerce->id == $user->id)
+			return $this->response()->success(true);
+
+		return $this->response()->error(['username already exists'], 400);
+	}
+
 	public function validation()
     {
         $UserEcommerce = UserEcommerce::where('validation_code', $this->request->validation_code)->first();
