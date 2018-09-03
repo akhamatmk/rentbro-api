@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\JWTAuth;
 use Akhamatvarokah\Rentbro\Models\Mysql\UserEcommerce;
 use Akhamatvarokah\Rentbro\Models\Mysql\UserEcommerceAddres;
+use Akhamatvarokah\Rentbro\Models\Mysql\Regency;
+use Akhamatvarokah\Rentbro\Models\Mysql\District;
 use Illuminate\Support\Facades\Hash;
 use App\Transformers\UserTransformer;
 
@@ -15,6 +17,61 @@ class UserController extends ApiController
         $user =  $JWTAuth->parseToken()->authenticate();
         $token = $JWTAuth->getToken();
         return $this->response()->success($user, ['meta.token' => (string) $token] , 200, new UserTransformer(), 'item');
+	}
+
+	public function delete_address($id, JWTAuth $JWTAuth)
+	{
+		$user =  $JWTAuth->parseToken()->authenticate();
+		$address = UserEcommerceAddres::where('user_ecommerce_id', $user->id)
+										->where('id', $id)
+										->first();
+		if($address)
+			$address->delete();
+
+		$token = $JWTAuth->getToken();
+        return $this->response()->success($address, ['meta.token' => (string) $token] );
+	}
+
+	public function edit_address($id, JWTAuth $JWTAuth)
+	{
+		$user =  $JWTAuth->parseToken()->authenticate();
+		$address = UserEcommerceAddres::where('user_ecommerce_id', $user->id)
+										->where('id', $id)
+										->first();
+		if($address)
+		{
+			$address->user_ecommerce_id = $user->id;
+			$address->province_id = $this->request->province;
+			$address->regency_id = $this->request->regency;
+			$address->district_id = $this->request->district;
+			$address->name = $this->request->name;
+			$address->phone = $this->request->phone;
+			$address->postal_code = $this->request->postal_code;
+			$address->full_address = $this->request->full_address;
+			$address->save();
+		}
+
+		$token = $JWTAuth->getToken();
+        return $this->response()->success($address, ['meta.token' => (string) $token] );
+	}
+
+	public function detail_address($id, JWTAuth $JWTAuth)
+	{
+		$user =  $JWTAuth->parseToken()->authenticate();
+		$address = UserEcommerceAddres::where('user_ecommerce_id', $user->id)
+										->where('id', $id)
+										->first();
+		$data = [];
+
+		if($address)
+		{
+			$data['address'] = $address;
+			$data['regency'] = Regency::select('id', 'name', 'type')->where('province_id', $address->province_id)->get();
+			$data['district'] = District::select('id', 'name')->where('regency_id', $address->regency_id)->get();
+		}
+
+		$token = $JWTAuth->getToken();
+        return $this->response()->success($data, ['meta.token' => (string) $token] );
 	}
 
 	public function profile_edit(JWTAuth $JWTAuth)

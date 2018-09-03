@@ -46,4 +46,7 @@ $router->post('vendor/create', ['uses' => 'User\VendorController@create' , 'midd
 
 $router->post('user/address/add', ['uses' => 'UserController@address_add' , 'middleware' => ['jwtauth']]);
 $router->get('user/address', ['uses' => 'UserController@list_address' , 'middleware' => ['jwtauth']]);
+$router->get('user/address/{id}', ['uses' => 'UserController@detail_address' , 'middleware' => ['jwtauth']]);
+$router->put('user/address/{id}', ['uses' => 'UserController@edit_address' , 'middleware' => ['jwtauth']]);
+$router->delete('user/address/{id}', ['uses' => 'UserController@delete_address' , 'middleware' => ['jwtauth']]);
 
