@@ -17,6 +17,7 @@ $router->get('/', function () use ($router) {
 
 
 $router->get('catalogue', 'CatalogueController@index');
+$router->get('catalogue/{id}', 'CatalogueController@show');
 
 $router->post('user/register', 'User\RegisterController@create');
 $router->post('user/register/{provider}', 'User\RegisterController@checkOtherApps');
