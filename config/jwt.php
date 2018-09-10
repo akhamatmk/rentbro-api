@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'user' => \Akhamatvarokah\Rentbro\Models\Mysql\UserEcommerce::class,
+    'user' => \Rentbro\Models\Mysql\UserEcommerce::class,
 
     /*
     |--------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Akhamatvarokah\Rentbro\Models\Mysql\Category;
+use Rentalbro\Models\Mysql\Category;
 
 class CategoryController extends ApiController
 {

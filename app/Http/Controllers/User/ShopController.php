@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use Akhamatvarokah\Rentbro\Models\Mysql\Shop;
-use Akhamatvarokah\Rentbro\Models\Mysql\Product;
-use Akhamatvarokah\Rentbro\Models\Mysql\ProductImage;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Rentalbro\Models\Mysql\Product;
+use Rentalbro\Models\Mysql\ProductImage;
+use Rentalbro\Models\Mysql\Shop;
 use Tymon\JWTAuth\JWTAuth;
 use Validator;
-use Illuminate\Support\Facades\Hash;
 
 class ShopController extends ApiController
 {

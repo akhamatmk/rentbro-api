@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+use Illuminate\Http\Request;
+use Rentalbro\Models\Mysql\Product;
+use Rentalbro\Models\Mysql\ProductImage;
+use Rentalbro\Models\Mysql\ProductPrice;
+use Rentalbro\Models\Mysql\Vendor;
+use Rentalbro\Models\Mysql\VendorLocation;
 use Tymon\JWTAuth\JWTAuth;
-use Akhamatvarokah\Rentbro\Models\Mysql\Vendor;
-use Akhamatvarokah\Rentbro\Models\Mysql\Product;
-use Akhamatvarokah\Rentbro\Models\Mysql\ProductImage;
-use Akhamatvarokah\Rentbro\Models\Mysql\VendorLocation;
-use Akhamatvarokah\Rentbro\Models\Mysql\ProductPrice;
 use Validator;
 
 class VendorController extends ApiController

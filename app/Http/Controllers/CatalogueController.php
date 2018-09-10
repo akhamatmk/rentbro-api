@@ -1,9 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Akhamatvarokah\Rentbro\Models\Mysql\Catalogue;
 use App\Transformers\CatalogTransformer;
+use Illuminate\Http\Request;
+use Rentalbro\Models\Mysql\Catalogue;
 
 class CatalogueController extends ApiController
 {

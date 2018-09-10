@@ -1,13 +1,13 @@
 <?php
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use Akhamatvarokah\Rentbro\Models\Mysql\UserEcommerce;
-use Akhamatvarokah\Rentbro\Models\Mysql\RegisterWithOtherApp;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Rentalbro\Models\Mysql\UserEcommerce;
+use Rentalbro\Models\Mysql\RegisterWithOtherApp;
 use Tymon\JWTAuth\JWTAuth;
 use Validator;
-use Illuminate\Support\Facades\Hash;
 
 class LoginController extends ApiController
 {

@@ -56,7 +56,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Akhamatvarokah\Rentbro\Models\Mysql\UserEcommerce::class,
+            'model' => Rentalbro\Models\Mysql\UserEcommerce::class,
         ],
     ],
     /*

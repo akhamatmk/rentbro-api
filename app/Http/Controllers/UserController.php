@@ -3,10 +3,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\JWTAuth;
-use Akhamatvarokah\Rentbro\Models\Mysql\UserEcommerce;
-use Akhamatvarokah\Rentbro\Models\Mysql\UserEcommerceAddres;
-use Akhamatvarokah\Rentbro\Models\Mysql\Regency;
-use Akhamatvarokah\Rentbro\Models\Mysql\District;
+use Rentalbro\Models\Mysql\Regency;
+use Rentalbro\Models\Mysql\District;
+use Rentalbro\Models\Mysql\UserEcommerce;
+use Rentalbro\Models\Mysql\UserEcommerceAddres;
 use Illuminate\Support\Facades\Hash;
 use App\Transformers\UserTransformer;
 

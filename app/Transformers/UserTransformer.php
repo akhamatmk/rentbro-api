@@ -1,7 +1,7 @@
 <?php
 namespace App\Transformers;
 
-use Akhamatvarokah\Rentbro\Models\Mysql\UserEcommerce;
+use Rentalbro\Models\Mysql\UserEcommerce;
 use League\Fractal\TransformerAbstract;
 
 class UserTransformer extends TransformerAbstract

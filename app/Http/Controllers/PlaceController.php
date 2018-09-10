@@ -2,9 +2,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Akhamatvarokah\Rentbro\Models\Mysql\Province;
-use Akhamatvarokah\Rentbro\Models\Mysql\Regency;
-use Akhamatvarokah\Rentbro\Models\Mysql\District;
+use Rentalbro\Models\Mysql\Province;
+use Rentalbro\Models\Mysql\Regency;
+use Rentalbro\Models\Mysql\District;
 
 class PlaceController extends ApiController
 {

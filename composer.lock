@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2bec746f0fab30b41edcafadac4e15d0",
+    "content-hash": "bb7195e9bed556e8eeeeb3b69bd21b57",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -2032,6 +2032,34 @@
                 "simple-cache"
             ],
             "time": "2017-10-23T01:57:42+00:00"
+        },
+        {
+            "name": "rentalbro/models",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/akhamatvarokah/rentalbro-package.git",
+                "reference": "8fe02aed16e8cea677f6be0ddb46809dd7c17e3a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/akhamatvarokah/rentalbro-package/zipball/8fe02aed16e8cea677f6be0ddb46809dd7c17e3a",
+                "reference": "8fe02aed16e8cea677f6be0ddb46809dd7c17e3a",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Akhamat",
+                    "email": "akhamatmkhoir@gmail.com"
+                }
+            ],
+            "description": "models for rental bro",
+            "time": "2018-09-10T08:53:40+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4612,6 +4640,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "rentalbro/models": 20,
         "tymon/jwt-auth": 20
     },
     "prefer-stable": true,

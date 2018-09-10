@@ -1,7 +1,7 @@
 <?php
 namespace App\Transformers;
 
-use Akhamatvarokah\Rentbro\Models\Mysql\Catalogue;
+use Rentalbro\Models\Mysql\Catalogue;
 use League\Fractal\TransformerAbstract;
 
 class CatalogTransformer extends TransformerAbstract

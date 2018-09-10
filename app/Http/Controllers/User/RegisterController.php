@@ -1,15 +1,15 @@
 <?php
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use Akhamatvarokah\Rentbro\Models\Mysql\Category;
-use Akhamatvarokah\Rentbro\Models\Mysql\UserEcommerce;
-use Akhamatvarokah\Rentbro\Models\Mysql\RegisterWithOtherApp;
-use Tymon\JWTAuth\JWTAuth;
-use Validator;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Rentalbro\Models\Mysql\Category;
+use Rentalbro\Models\Mysql\UserEcommerce;
+use Rentalbro\Models\Mysql\RegisterWithOtherApp;
+use Tymon\JWTAuth\JWTAuth;
+use Validator;
 
 class RegisterController extends ApiController
 {
