@@ -50,4 +50,3 @@ $router->get('user/address', ['uses' => 'UserController@list_address' , 'middlew
 $router->get('user/address/{id}', ['uses' => 'UserController@detail_address' , 'middleware' => ['jwtauth']]);
 $router->put('user/address/{id}', ['uses' => 'UserController@edit_address' , 'middleware' => ['jwtauth']]);
 $router->delete('user/address/{id}', ['uses' => 'UserController@delete_address' , 'middleware' => ['jwtauth']]);
-

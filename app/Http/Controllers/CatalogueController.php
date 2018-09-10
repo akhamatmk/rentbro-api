@@ -16,6 +16,7 @@ class CatalogueController extends ApiController
 	public function show($id)
 	{
 		$catalogue = Catalogue::find($id);
-		return $this->response()->success($catalogue, [] , 200, new CatalogTransformer(), 'item');
+		return $this->response()->success($catalogue, [] , 200, new CatalogTransformer(), 'item', null, ['catalogueCategory']);
+
 	}
 }
