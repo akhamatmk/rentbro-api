@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "bb7195e9bed556e8eeeeb3b69bd21b57",
+    "content-hash": "2bec746f0fab30b41edcafadac4e15d0",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -2034,45 +2034,17 @@
             "time": "2017-10-23T01:57:42+00:00"
         },
         {
-            "name": "rentalbro/models",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/akhamatvarokah/rentalbro-package.git",
-                "reference": "8fe02aed16e8cea677f6be0ddb46809dd7c17e3a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/akhamatvarokah/rentalbro-package/zipball/8fe02aed16e8cea677f6be0ddb46809dd7c17e3a",
-                "reference": "8fe02aed16e8cea677f6be0ddb46809dd7c17e3a",
-                "shasum": ""
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Akhamat",
-                    "email": "akhamatmkhoir@gmail.com"
-                }
-            ],
-            "description": "models for rental bro",
-            "time": "2018-09-10T08:53:40+00:00"
-        },
-        {
             "name": "swiftmailer/swiftmailer",
-            "version": "v6.1.2",
+            "version": "v6.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "7d760881d266d63c5e7a1155cbcf2ac656a31ca8"
+                "reference": "8ddcb66ac10c392d3beb54829eef8ac1438595f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/7d760881d266d63c5e7a1155cbcf2ac656a31ca8",
-                "reference": "7d760881d266d63c5e7a1155cbcf2ac656a31ca8",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/8ddcb66ac10c392d3beb54829eef8ac1438595f4",
+                "reference": "8ddcb66ac10c392d3beb54829eef8ac1438595f4",
                 "shasum": ""
             },
             "require": {
@@ -2118,7 +2090,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2018-07-13T07:04:35+00:00"
+            "time": "2018-09-11T07:12:52+00:00"
         },
         {
             "name": "symfony/console",
@@ -3901,16 +3873,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.3.4",
+            "version": "7.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "0356331bf62896dc56e3a15030b23b73f38b2935"
+                "reference": "7b331efabbb628c518c408fdfcaf571156775de2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0356331bf62896dc56e3a15030b23b73f38b2935",
-                "reference": "0356331bf62896dc56e3a15030b23b73f38b2935",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7b331efabbb628c518c408fdfcaf571156775de2",
+                "reference": "7b331efabbb628c518c408fdfcaf571156775de2",
                 "shasum": ""
             },
             "require": {
@@ -3981,7 +3953,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-09-05T09:58:53+00:00"
+            "time": "2018-09-08T15:14:29+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -4640,7 +4612,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "rentalbro/models": 20,
         "tymon/jwt-auth": 20
     },
     "prefer-stable": true,

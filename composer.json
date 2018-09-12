@@ -9,7 +9,6 @@
         "illuminate/mail": "^5.6",
         "laravel/lumen-framework": "5.6.*",
         "league/fractal": "^0.17.0",
-        "rentalbro/models": "dev-master",
         "tymon/jwt-auth": "dev-develop",
         "vlucas/phpdotenv": "~2.2"
     },
