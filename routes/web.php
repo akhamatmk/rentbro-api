@@ -16,6 +16,10 @@ $router->get('/', function () use ($router) {
 });
 
 
+$router->get('product/option', 'ProductOptionController@index');
+$router->get('product/option/{name}', 'ProductOptionController@show');
+$router->post('product/option/multiple', 'ProductOptionController@multiple');
+
 $router->get('catalogue', 'CatalogueController@index');
 $router->get('catalogue/{id}', 'CatalogueController@show');
 
@@ -27,7 +31,7 @@ $router->get('category', 'CategoryController@index');
 $router->post('shop/register', ['uses' => 'User\ShopController@register' , 'middleware' => ['jwtauth']]);
 $router->get('user/info', ['uses' => 'UserController@info' , 'middleware' => ['jwtauth']]);
 
-$router->post('vendor/{vendor_id}/product/store', ['uses' => 'User\VendorController@product_add' , 'middleware' => ['cors', 'jwtauth']]);
+$router->post('vendor/{nickname}/product/store', ['uses' => 'User\VendorController@product_add' , 'middleware' => ['cors', 'jwtauth']]);
 
 $router->post('user/profile/edit', ['uses' => 'UserController@profile_edit' , 'middleware' => ['jwtauth']]);
 $router->post('user/profile/image/change', ['uses' => 'UserController@profile_image_change' , 'middleware' => ['jwtauth']]);

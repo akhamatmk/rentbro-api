@@ -81,14 +81,15 @@ class VendorController extends ApiController
 		return $this->response()->success($vendor);
 	}
 
-	public function product_add($vendor_id, JWTAuth $JWTAuth)
+	public function product_add($nickname, JWTAuth $JWTAuth)
     {
     	$user =  $JWTAuth->parseToken()->authenticate();
         $token = $JWTAuth->fromUser($user);
-    	$vendor = Vendor::where('id', $vendor_id)->where('user_ecommerce_id', $user->id)->first();
+    	$vendor = Vendor::whereRaw('nickname = "'.strtolower($nickname).'"')->where('user_ecommerce_id', $user->id)->first();
 		if(! $vendor)
 			return $this->response()->error(['Vendor Not Found'], 400);
         
+        return $this->response()->success($_POST);
         $price_type = $this->request->price_type;
 
         $amount = $this->request->amount;
