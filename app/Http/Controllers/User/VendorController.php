@@ -91,7 +91,7 @@ class VendorController extends ApiController
         
         return $this->response()->success($_POST);
         $price_type = $this->request->price_type;
-
+        $option_value = $this->request->option_value;
         $amount = $this->request->amount;
         $price = $this->request->price;
 
@@ -101,6 +101,7 @@ class VendorController extends ApiController
         $product->name = strtolower($this->request->name);
         $product->alias = str_replace(" ", "-", strtolower($this->request->name)."_".$user->id.date('his')) ;
         $product->quantity = (int) $this->request->quantity;
+        $product->minimum_deposit = (int) str_replace(".", "", $this->request->minimum_deposit);
         $product->weight = $this->request->weight;
         $product->image = $this->request->product_image_primary;
         $product->description = $this->request->description;        
@@ -122,9 +123,15 @@ class VendorController extends ApiController
                 $ProductPrice->product_id = $product->id;
                 $ProductPrice->type = $value;
                 $ProductPrice->amount = $amount[$key];
-                $ProductPrice->price = $price[$key];
+                $ProductPrice->price = (int) str_replace(".", "", $price[$key]);
                 $ProductPrice->save();    
             }            
+        }
+
+        foreach ($option_value as $key => $value) {
+           foreach ($value as $keyChild => $valueChild) {
+                # code...
+            } 
         }
 
         return $this->response()->success($product, ['meta.token' => $token]);

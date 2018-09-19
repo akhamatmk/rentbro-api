@@ -14,7 +14,7 @@ class AddColoumnMinumumDeposit extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            //
+            $table->integer('minimum_deposit')->default(0);
         });
     }
 
