@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->integer('kind_of_rent');
             $table->integer('quantity');
             $table->integer('price');
-            $table->double('weigth')->default(0);
+            $table->double('weight')->default(0);
             $table->string('image')->nullable();
             $table->timestamps();
             $table->softDeletes();

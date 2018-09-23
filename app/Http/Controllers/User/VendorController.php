@@ -2,9 +2,14 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\ApiController;
+use App\Transformers\ProductTransformer;
 use Illuminate\Http\Request;
+use Rentalbro\Models\Mysql\Catalogue;
+use Rentalbro\Models\Mysql\CatalogueCategory;
+use Rentalbro\Models\Mysql\Media;
 use Rentalbro\Models\Mysql\Product;
-use Rentalbro\Models\Mysql\ProductImage;
+use Rentalbro\Models\Mysql\ProductCategory;
+use Rentalbro\Models\Mysql\ProductOptionXref;
 use Rentalbro\Models\Mysql\ProductPrice;
 use Rentalbro\Models\Mysql\Vendor;
 use Rentalbro\Models\Mysql\VendorLocation;
@@ -46,6 +51,19 @@ class VendorController extends ApiController
 		return $this->response()->success($vendor, ['meta.token' => (string) $token]);
 	}
 
+   public function list_product($nickname, JWTAuth $JWTAuth)
+   {
+      $user =  $JWTAuth->parseToken()->authenticate();
+      $vendor = Vendor::where('nickname', $nickname)->where('user_ecommerce_id', $user->id)->first();
+      if(! $vendor)
+         return $this->response()->error(['Vendor Not Found'], 400);
+
+      $product = Product::where('vendor_id', $vendor->id)->get();
+
+      $token = $JWTAuth->getToken();
+      return $this->response()->success($product, ['meta.token' => (string) $token] , 200, new ProductTransformer(), 'collection');
+   }
+
 	public function create(JWTAuth $JWTAuth)
 	{
 		$rules = [
@@ -84,35 +102,54 @@ class VendorController extends ApiController
 	public function product_add($nickname, JWTAuth $JWTAuth)
     {
     	$user =  $JWTAuth->parseToken()->authenticate();
-        $token = $JWTAuth->fromUser($user);
+      $token = $JWTAuth->fromUser($user);
+      // return $this->response()->success($_POST, ['meta.token' => $token]);
     	$vendor = Vendor::whereRaw('nickname = "'.strtolower($nickname).'"')->where('user_ecommerce_id', $user->id)->first();
 		if(! $vendor)
 			return $this->response()->error(['Vendor Not Found'], 400);
+
+        $category = [];
         
-        return $this->response()->success($_POST);
+        if(isset($_POST['catalogue']))
+        {
+            $CatalogueCategory = CatalogueCategory::select('category_id')->where('catalogue_id', $_POST['catalogue'])->get();
+            foreach ($CatalogueCategory as $value) {
+                $category[] = $value->category_id;
+            }
+        }else if(isset($_POST['category']))
+        {
+            $category[] = $_POST['category'];
+        }
+        
         $price_type = $this->request->price_type;
         $option_value = $this->request->option_value;
         $amount = $this->request->amount;
         $price = $this->request->price;
 
         $product = new Product;
-        $product->vendor_id = $vendor_id;
-        $product->category_id = $this->request->category;
+        $product->vendor_id = $vendor->id;
         $product->name = strtolower($this->request->name);
         $product->alias = str_replace(" ", "-", strtolower($this->request->name)."_".$user->id.date('his')) ;
         $product->quantity = (int) $this->request->quantity;
         $product->minimum_deposit = (int) str_replace(".", "", $this->request->minimum_deposit);
         $product->weight = $this->request->weight;
         $product->image = $this->request->product_image_primary;
-        $product->description = $this->request->description;        
+        $product->description = $this->request->description;
         $product->save();
+
+        foreach ($category as $key => $value) {
+            $ProductCategory = new ProductCategory;
+            $ProductCategory->product_id = $product->id;
+            $ProductCategory->category_id = $value;
+            $ProductCategory->save();
+        }
 
         if(isset($_POST['product_images'])){
             foreach ($this->request->product_images as $key => $value) {
-                $ProductImage = new ProductImage;
-                $ProductImage->product_id = $product->id;
-                $ProductImage->image = $value;
-                $ProductImage->save();
+                $media = new Media;
+                $media->relation_id = $product->id;
+                $media->url = $value;
+                $media->save();
             }    
         }
         
@@ -129,9 +166,13 @@ class VendorController extends ApiController
         }
 
         foreach ($option_value as $key => $value) {
-           foreach ($value as $keyChild => $valueChild) {
-                # code...
-            } 
+            foreach ($value as $valueChild) {
+                $ProductOptionXref = new ProductOptionXref;
+                $ProductOptionXref->product_id = $product->id;
+                $ProductOptionXref->product_option_id = $key;
+                $ProductOptionXref->product_option_value_id = $valueChild;
+                $ProductOptionXref->save();
+            }
         }
 
         return $this->response()->success($product, ['meta.token' => $token]);
