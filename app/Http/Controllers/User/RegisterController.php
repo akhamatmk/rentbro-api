@@ -37,7 +37,8 @@ class RegisterController extends ApiController
 		$user->email	= $this->request->get('email');
 		$user->password	= Hash::make($this->request->get('password'));
         $user->phone    = $this->request->get('phone');
-		$user->validation_code	= Hash::make($this->request->get('email'));
+        $user->validation_code  = Hash::make($this->request->get('email'));
+		$user->password_make	= 1;
         if(! $user->save())
             return $this->response()->error(["failed save data"]);
 
@@ -78,6 +79,7 @@ class RegisterController extends ApiController
             $user->phone    = 821;
             $user->image    = $this->request->avatar_original;
             $user->validation_code  = Hash::make($this->request->email);
+            $user->password_make    = 0;
 
             if(! $user->save())
                 return $this->response()->error(["failed save data"], 403);

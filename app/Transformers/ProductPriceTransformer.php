@@ -8,11 +8,12 @@ class ProductPriceTransformer extends TransformerAbstract
 {
 	public function transform(ProductPrice $price)
    	{    
-      $data =  [
-         'id'           => (int) $product->id,
-         'name'			=> $product->name,
-
-      ];
+      	$data =  [
+				'id'           => (int) $price->id,
+				'type'			=> (int) $price->type,
+				'amount'			=> (int) $price->amount,
+				'price'			=> (int) $price->price,
+      	];
         
       return $data;
    }

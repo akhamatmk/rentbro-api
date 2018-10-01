@@ -7,8 +7,10 @@ use Rentalbro\Models\Mysql\Regency;
 use Rentalbro\Models\Mysql\District;
 use Rentalbro\Models\Mysql\UserEcommerce;
 use Rentalbro\Models\Mysql\UserEcommerceAddres;
+use Rentalbro\Models\Mysql\VerificationCode;
 use Illuminate\Support\Facades\Hash;
 use App\Transformers\UserTransformer;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends ApiController
 {
@@ -30,6 +32,69 @@ class UserController extends ApiController
 
 		$token = $JWTAuth->getToken();
         return $this->response()->success($address, ['meta.token' => (string) $token] );
+	}
+
+	public function send_code_new_password(JWTAuth $JWTAuth)
+	{
+		$user =  $JWTAuth->parseToken()->authenticate();
+		$token = $JWTAuth->getToken();
+
+		$code = VerificationCode::where('user_ecommerce_id', $user->id)->where('type',  $this->request->type)->first();
+		if($code)
+			$code->delete();
+		
+
+		$code = new VerificationCode;
+		$code->user_ecommerce_id = $user->id;
+		$code->type = $this->request->type;
+		$code->code = md5($user->id.date('Y-m-d h:i:s'));
+		$code->save();
+
+		$url = env('MAIN_URL_WEB')."set/newPassword/".$code->code ;
+        Mail::html('<a href="'.$url.'">Click here to Veryfication</a>', function($msg) { 
+            $msg->to(['akhamatmkhoir@gmail.com']); 
+            $msg->from(['admin@rentbro.com']); 
+            $msg->setBody("<a href='google.com'>sadsa</a>", 'text/html');
+        });
+
+		return $this->response()->success('succes', ['meta.token' => (string) $token] );	
+	}
+
+	public function check_code_new_password(JWTAuth $JWTAuth)
+	{
+		$user =  $JWTAuth->parseToken()->authenticate();
+		$token = $JWTAuth->getToken();
+		$code = VerificationCode::where('user_ecommerce_id', $user->id)->where('code',  $this->request->code)->first();
+
+		if($code)
+			return $this->response()->success('succes', ['meta.token' => (string) $token] );	
+
+		return $this->response()->error($_GET, 400);
+	}
+
+	public function make_new_password(JWTAuth $JWTAuth)
+	{
+		$user =  $JWTAuth->parseToken()->authenticate();
+		$user->password = Hash::make($this->request->password);
+		$user->password_make    = 1;
+		$user->save();
+		$token = $JWTAuth->getToken();
+
+		return $this->response()->success($user, ['meta.token' => (string) $token] );	
+	}
+
+	public function change_new_password(JWTAuth $JWTAuth)
+	{
+		$user =  $JWTAuth->parseToken()->authenticate();
+
+		if(! (Hash::check($this->request->old_password, $user->password)))
+			return $this->response()->error(["Wrong  password"]);
+
+		$user->password = Hash::make($this->request->password);
+		$user->password_make    = 1;
+		$user->save();
+		$token = $JWTAuth->getToken();
+		return $this->response()->success($user, ['meta.token' => (string) $token] );	
 	}
 
 	public function edit_address($id, JWTAuth $JWTAuth)

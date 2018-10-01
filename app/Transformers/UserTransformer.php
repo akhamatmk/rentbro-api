@@ -10,15 +10,16 @@ class UserTransformer extends TransformerAbstract
    { 
 
       $data =  [
-         'id'			=> (int) $user->id,
-         'username'	=> $user->username,
-         'name'		=> $user->name,
-         'email'		=> $user->email,
-         'phone'		=> $user->phone,
-         'image'		=> get_image_s3_url($user->image, 'user/profile'),
-         'birth_day'	=> $user->birth_day,
-         'gender'		=> $user->gender,         
-         'vendor'		=> $user->vendor,
+         'id'			        => (int) $user->id,
+         'username'	       => $user->username,
+         'name'		       => $user->name,
+         'email'		         => $user->email,
+         'phone'		         => $user->phone,
+         'image'		         => get_image_s3_url($user->image, 'user/profile'),
+         'birth_day'	         => $user->birth_day,
+         'gender'		        => $user->gender,         
+         'vendor'             => $user->vendor,
+         'password_make'		=> $user->password_make,
       ];
         
       return $data;

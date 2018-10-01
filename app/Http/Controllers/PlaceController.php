@@ -19,9 +19,9 @@ class PlaceController extends ApiController
 	{
 		$province_id = isset($_GET['province_id']) ? $_GET['province_id'] : null;
 		if($province_id)
-			$province = Regency::select('id', 'name', 'type')->where('province_id', $province_id)->get();
+			$province = Regency::select('id', 'name', 'type', 'city_rajaongkir_id')->where('province_id', $province_id)->get();
 		else
-			$province = Regency::select('id', 'name', 'type')->get();
+			$province = Regency::select('id', 'name', 'type', 'city_rajaongkir_id')->get();
 
 		return $this->response()->success($province);
 	}

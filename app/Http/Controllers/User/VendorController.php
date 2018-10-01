@@ -3,6 +3,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\ApiController;
 use App\Transformers\ProductTransformer;
+use App\Transformers\VendorTransformer;
 use Illuminate\Http\Request;
 use Rentalbro\Models\Mysql\Catalogue;
 use Rentalbro\Models\Mysql\CatalogueCategory;
@@ -48,7 +49,8 @@ class VendorController extends ApiController
 			return $this->response()->error(['Vendor Not Found'], 400);
 
 		$token = $JWTAuth->getToken();
-		return $this->response()->success($vendor, ['meta.token' => (string) $token]);
+        
+        return $this->response()->success($vendor, ['meta.token' => (string) $token] , 200, new VendorTransformer(), 'item');
 	}
 
    public function list_product($nickname, JWTAuth $JWTAuth)
@@ -102,8 +104,7 @@ class VendorController extends ApiController
 	public function product_add($nickname, JWTAuth $JWTAuth)
     {
     	$user =  $JWTAuth->parseToken()->authenticate();
-      $token = $JWTAuth->fromUser($user);
-      // return $this->response()->success($_POST, ['meta.token' => $token]);
+        $token = $JWTAuth->fromUser($user);
     	$vendor = Vendor::whereRaw('nickname = "'.strtolower($nickname).'"')->where('user_ecommerce_id', $user->id)->first();
 		if(! $vendor)
 			return $this->response()->error(['Vendor Not Found'], 400);
@@ -128,6 +129,7 @@ class VendorController extends ApiController
 
         $product = new Product;
         $product->vendor_id = $vendor->id;
+        $product->catalog_id = $this->request->catalogue;
         $product->name = strtolower($this->request->name);
         $product->alias = str_replace(" ", "-", strtolower($this->request->name)."_".$user->id.date('his')) ;
         $product->quantity = (int) $this->request->quantity;

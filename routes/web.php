@@ -15,13 +15,16 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->get('test', 'ExampleController@tes');
 
+$router->get('product/list', 'ProductController@list');
+$router->get('product/{vendor}/{product}', 'ProductController@detail');
 $router->get('product/option', 'ProductOptionController@index');
 $router->get('product/option/{name}', 'ProductOptionController@show');
 $router->post('product/option/multiple', 'ProductOptionController@multiple');
-
 $router->get('catalogue', 'CatalogueController@index');
 $router->get('catalogue/{id}', 'CatalogueController@show');
+
 $router->post('user/register', 'User\RegisterController@create');
 $router->post('user/register/{provider}', 'User\RegisterController@checkOtherApps');
 $router->post('user/login', 'User\LoginController@check');
@@ -31,6 +34,13 @@ $router->post('shop/register', ['uses' => 'User\ShopController@register' , 'midd
 $router->get('user/info', ['uses' => 'UserController@info' , 'middleware' => ['jwtauth']]);
 $router->post('vendor/{nickname}/product/store', ['uses' => 'User\VendorController@product_add' , 'middleware' => ['cors', 'jwtauth']]);
 $router->post('user/profile/edit', ['uses' => 'UserController@profile_edit' , 'middleware' => ['jwtauth']]);
+$router->get('user/send/code/newPassword', ['uses' => 'UserController@send_code_new_password' , 'middleware' => ['cors', 'jwtauth']]);
+$router->get('user/check/code/newPassword', ['uses' => 'UserController@check_code_new_password' , 'middleware' => ['cors', 'jwtauth']]);
+
+$router->post('user/set/new/password', ['uses' => 'UserController@make_new_password' , 'middleware' => ['cors', 'jwtauth']]);
+$router->post('user/change/password', ['uses' => 'UserController@change_new_password' , 'middleware' => ['cors', 'jwtauth']]);
+
+
 $router->post('user/profile/image/change', ['uses' => 'UserController@profile_image_change' , 'middleware' => ['jwtauth']]);
 $router->post('user/profile/edit/validation', ['uses' => 'UserController@profile_edit_validation' , 'middleware' => ['jwtauth']]);
 $router->post('user/check/email', ['uses' => 'UserController@check_email']);
