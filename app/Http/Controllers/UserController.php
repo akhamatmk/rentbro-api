@@ -113,6 +113,12 @@ class UserController extends ApiController
 			$address->phone = $this->request->phone;
 			$address->postal_code = $this->request->postal_code;
 			$address->full_address = $this->request->full_address;
+
+			$address->map_street = $this->request->map_street;
+			$address->long = $this->request->long;
+			$address->lat = $this->request->lat;
+
+
 			$address->save();
 		}
 
@@ -165,6 +171,9 @@ class UserController extends ApiController
 		$address->postal_code = $this->request->postal_code;
 		$address->full_address = $this->request->full_address;
 		$address->primary = $this->request->primary;
+		$address->map_street = $this->request->map_street;
+		$address->long = $this->request->long;
+		$address->lat = $this->request->lat;
 		$address->save();
 
         $token = $JWTAuth->getToken();

@@ -24,6 +24,8 @@ class ProductTransformer extends TransformerAbstract
          'catalog'         => $product->catalog,
          'weight'         => (double) $product->weight,
          'vendor'          => $product->vendor,
+         'max_cod_free'   => (int) $product->max_cod_free ,
+         'price_cod'     => $product->price_cod,
       ];
 
       return $data;

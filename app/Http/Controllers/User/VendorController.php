@@ -66,6 +66,16 @@ class VendorController extends ApiController
       return $this->response()->success($product, ['meta.token' => (string) $token] , 200, new ProductTransformer(), 'collection');
    }
 
+   public function location_first($nickname)
+   {
+        $vendor = Vendor::where('nickname', $nickname)->first();
+        if(! $vendor)
+            return $this->response()->error(['Vendor Not Found'], 400);
+
+        $location = VendorLocation::where('vendor_id', $vendor->id)->first();
+        return $this->response()->success($location);
+   }
+
 	public function create(JWTAuth $JWTAuth)
 	{
 		$rules = [
@@ -95,7 +105,10 @@ class VendorController extends ApiController
 		$vendorLocation->vendor_id = $vendor->id;
 		$vendorLocation->district_id = $this->request->district;
 		$vendorLocation->zip_code = $this->request->zip_code;
-		$vendorLocation->detail_location = $this->request->detail_location;
+        $vendorLocation->detail_location = $this->request->detail_location;
+        $vendorLocation->map_street = $this->request->map_street;
+        $vendorLocation->long = $this->request->long;
+		$vendorLocation->lat = $this->request->lat;
 		$vendorLocation->save();
 
 		return $this->response()->success($vendor);
@@ -121,9 +134,14 @@ class VendorController extends ApiController
         {
             $category[] = $_POST['category'];
         }
+
+        $option_value = null;
+        if(isset($_POST['option_value']))
+        {
+            $option_value = $this->request->option_value;
+        }
         
         $price_type = $this->request->price_type;
-        $option_value = $this->request->option_value;
         $amount = $this->request->amount;
         $price = $this->request->price;
 
@@ -136,6 +154,8 @@ class VendorController extends ApiController
         $product->minimum_deposit = (int) str_replace(".", "", $this->request->minimum_deposit);
         $product->weight = $this->request->weight;
         $product->image = $this->request->product_image_primary;
+        $product->price_cod = (int) str_replace(".", "", $this->request->minimum_deposit);
+        $product->max_cod_free = $this->request->max_cod_free;
         $product->description = $this->request->description;
         $product->save();
 
