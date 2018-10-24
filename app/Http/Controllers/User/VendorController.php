@@ -147,7 +147,10 @@ class VendorController extends ApiController
 
         $product = new Product;
         $product->vendor_id = $vendor->id;
-        $product->catalog_id = $this->request->catalogue;
+        
+        if($this->request->catalogue != 0)
+            $product->catalog_id = $this->request->catalogue;
+
         $product->name = strtolower($this->request->name);
         $product->alias = str_replace(" ", "-", strtolower($this->request->name)."_".$user->id.date('his')) ;
         $product->quantity = (int) $this->request->quantity;
@@ -175,28 +178,35 @@ class VendorController extends ApiController
             }    
         }
         
-        foreach ($price_type as $key => $value) {
-            if($value != "" AND $amount[$key] != "" AND $price[$key] != "")
-            {
-                $ProductPrice = new ProductPrice;
-                $ProductPrice->product_id = $product->id;
-                $ProductPrice->type = $value;
-                $ProductPrice->amount = $amount[$key];
-                $ProductPrice->price = (int) str_replace(".", "", $price[$key]);
-                $ProductPrice->save();    
-            }            
+        if($price_type != null AND count($price_type) > 0)
+        {
+            foreach ($price_type as $key => $value) {
+                if($value != "" AND $amount[$key] != "" AND $price[$key] != "")
+                {
+                    $ProductPrice = new ProductPrice;
+                    $ProductPrice->product_id = $product->id;
+                    $ProductPrice->type = $value;
+                    $ProductPrice->amount = $amount[$key];
+                    $ProductPrice->price = (int) str_replace(".", "", $price[$key]);
+                    $ProductPrice->save();    
+                }            
+            }    
         }
+        
 
-        foreach ($option_value as $key => $value) {
-            foreach ($value as $valueChild) {
-                $ProductOptionXref = new ProductOptionXref;
-                $ProductOptionXref->product_id = $product->id;
-                $ProductOptionXref->product_option_id = $key;
-                $ProductOptionXref->product_option_value_id = $valueChild;
-                $ProductOptionXref->save();
+        if($option_value != null and count($option_value) > 0)
+        {
+            foreach ($option_value as $key => $value) {
+                foreach ($value as $valueChild) {
+                    $ProductOptionXref = new ProductOptionXref;
+                    $ProductOptionXref->product_id = $product->id;
+                    $ProductOptionXref->product_option_id = $key;
+                    $ProductOptionXref->product_option_value_id = $valueChild;
+                    $ProductOptionXref->save();
+                }
             }
         }
-
+        
         return $this->response()->success($product, ['meta.token' => $token]);
     }
 }
