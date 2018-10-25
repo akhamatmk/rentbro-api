@@ -184,7 +184,7 @@ class UserController extends ApiController
 	{
 		$user =  $JWTAuth->parseToken()->authenticate();
 		$address = UserEcommerceAddres::select('user_ecommerce_address.*', 
-					'provinces.name as provincy_name', 'regencies.name as regency_name', 'districts.name as district_name')
+					'provinces.name as provincy_name', 'regencies.name as regency_name', 'regencies.city_rajaongkir_id', 'districts.name as district_name')
 					->leftJoin('provinces', 'provinces.id', 'user_ecommerce_address.province_id')
 					->leftJoin('regencies', 'regencies.id', 'user_ecommerce_address.regency_id')
 					->leftJoin('districts', 'districts.id', 'user_ecommerce_address.district_id')

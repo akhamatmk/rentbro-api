@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\ApiController;
 use App\Transformers\ProductTransformer;
 use App\Transformers\VendorTransformer;
+use App\Transformers\VendorLocationTransformer;
 use Illuminate\Http\Request;
 use Rentalbro\Models\Mysql\Catalogue;
 use Rentalbro\Models\Mysql\CatalogueCategory;
@@ -73,7 +74,7 @@ class VendorController extends ApiController
             return $this->response()->error(['Vendor Not Found'], 400);
 
         $location = VendorLocation::where('vendor_id', $vendor->id)->first();
-        return $this->response()->success($location);
+        return $this->response()->success($location, [] , 200, new VendorLocationTransformer(), 'item');
    }
 
 	public function create(JWTAuth $JWTAuth)
@@ -107,8 +108,8 @@ class VendorController extends ApiController
 		$vendorLocation->zip_code = $this->request->zip_code;
         $vendorLocation->detail_location = $this->request->detail_location;
         $vendorLocation->map_street = $this->request->map_street;
-        $vendorLocation->long = $this->request->long;
-		$vendorLocation->lat = $this->request->lat;
+        $vendorLocation->longitude = $this->request->long;
+		$vendorLocation->latitude = $this->request->lat;
 		$vendorLocation->save();
 
 		return $this->response()->success($vendor);
