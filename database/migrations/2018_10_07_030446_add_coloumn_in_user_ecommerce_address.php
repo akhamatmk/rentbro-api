@@ -14,8 +14,8 @@ class AddColoumnInUserEcommerceAddress extends Migration
     public function up()
     {
         Schema::table('user_ecommerce_address', function (Blueprint $table) {
-            $table->decimal('long', 10, 7)->nullable();
-            $table->decimal('lat', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
+            $table->decimal('latlatitude', 10, 7)->nullable();
             $table->string('map_street')->nullable();
         });
     }

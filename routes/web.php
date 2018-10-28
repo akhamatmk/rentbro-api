@@ -16,12 +16,19 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('test', 'ExampleController@tes');
+$router->post('product/option/multiple', 'ProductOptionController@multiple');
+
+$router->get('chart/list/ajax', ['uses' => 'ChartController@ajaxList' , 'middleware' => ['cors', 'jwtauth']]);
+$router->get('chart/list', ['uses' => 'ChartController@list' , 'middleware' => ['cors', 'jwtauth']]);
+$router->post('chart/checkout', ['uses' => 'ChartController@checkout' , 'middleware' => ['cors', 'jwtauth']]);
 
 $router->get('product/list', 'ProductController@list');
 $router->get('product/{vendor}/{product}', 'ProductController@detail');
+$router->post('product/{vendor}/{product}', ['uses' => 'ProductController@chart' , 'middleware' => ['cors', 'jwtauth']]);
+
 $router->get('product/option', 'ProductOptionController@index');
 $router->get('product/option/{name}', 'ProductOptionController@show');
-$router->post('product/option/multiple', 'ProductOptionController@multiple');
+
 $router->get('catalogue', 'CatalogueController@index');
 $router->get('catalogue/{id}', 'CatalogueController@show');
 
