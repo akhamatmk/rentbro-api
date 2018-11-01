@@ -17,8 +17,10 @@ class CreteTransactionsTable extends Migration
             $table->increments('id');            
             $table->integer('user_ecommerce_id')->length(5)->unsigned()->nullable();
             $table->string('code_trans')->unique();
-            $table->integer('shipping')->default(0);
-            $table->integer('price')->default(0);
+            $table->integer('summary_shipping')->default(0);
+            $table->integer('summary_price')->default(0);
+            $table->integer('summary_deposit')->default(0);
+            $table->integer('summary_all')->default(0);
 
             $table->timestamps();
             $table->foreign('user_ecommerce_id')->references('id')->on('user_ecommerce');

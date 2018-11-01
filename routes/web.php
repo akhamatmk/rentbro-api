@@ -18,8 +18,11 @@ $router->get('/', function () use ($router) {
 $router->get('test', 'ExampleController@tes');
 $router->post('product/option/multiple', 'ProductOptionController@multiple');
 
+$router->get('invoice/{inv}', ['uses' => 'TransactionController@invoice' , 'middleware' => ['cors', 'jwtauth']]);
+
 $router->get('chart/list/ajax', ['uses' => 'ChartController@ajaxList' , 'middleware' => ['cors', 'jwtauth']]);
 $router->get('chart/list', ['uses' => 'ChartController@list' , 'middleware' => ['cors', 'jwtauth']]);
+$router->delete('chart/{chart}', ['uses' => 'ChartController@destroy' , 'middleware' => ['cors','jwtauth']]);
 $router->post('chart/checkout', ['uses' => 'ChartController@checkout' , 'middleware' => ['cors', 'jwtauth']]);
 
 $router->get('product/list', 'ProductController@list');
