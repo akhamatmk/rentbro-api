@@ -36,7 +36,7 @@ class ChartController extends ApiController
 		$user =  $JWTAuth->parseToken()->authenticate();
 		$token = $JWTAuth->getToken();
 		$count_trans = Transaction::get()->count() + 1;
-
+		
     	$transaction = new Transaction;
     	$transaction->user_ecommerce_id = (int) $user->id;
     	$transaction->code_trans = "INV".$count_trans."".date('Ymdhis');

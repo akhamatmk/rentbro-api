@@ -7,7 +7,7 @@ use League\Fractal\TransformerAbstract;
 class ProductPriceTransformer extends TransformerAbstract
 {
 	public function transform(ProductPrice $price)
-   	{    
+   	{
       	$data =  [
 				'id'           => (int) $price->id,
 				'type'			=> (int) $price->type,
