@@ -20,6 +20,7 @@ class VendorLocationTransformer extends TransformerAbstract
 			'phone'       			=> $vendor->phone,
 			'longitude'				=> $vendor->longitude,
 			'latitude'				=> $vendor->latitude,
+			'map_street'			=> $vendor->map_street,
       	];
       	return $data;
    	}

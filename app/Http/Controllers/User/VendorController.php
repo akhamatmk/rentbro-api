@@ -77,6 +77,28 @@ class VendorController extends ApiController
         return $this->response()->success($location, [] , 200, new VendorLocationTransformer(), 'item');
    }
 
+    public function location_edit($nickname, JWTAuth $JWTAuth)
+    {
+        $user =  $JWTAuth->parseToken()->authenticate();
+        $vendor = Vendor::where('nickname', $nickname)->where('user_ecommerce_id', $user->id)->first();
+        if(! $vendor)
+            return $this->response()->error(['Vendor Not Found'], 400);
+        
+        $vendorLocation = VendorLocation::where('id', $_POST['id'])->where('vendor_id', $vendor->id)->first();
+        if(! $vendorLocation)
+            return $this->response()->error(['Location Not Found'], 400);
+
+        $vendorLocation->district_id = $_POST['district'];
+        $vendorLocation->detail_location = $_POST['location_detail'];
+        $vendorLocation->map_street = $_POST['map_street'];
+        $vendorLocation->longitude = $_POST['long'];
+        $vendorLocation->latitude = $_POST['lat'];
+        $vendorLocation->save();
+
+        $token = $JWTAuth->getToken();
+        return $this->response()->success($vendorLocation, [] , 200, new VendorLocationTransformer(), 'item');
+   }
+
 	public function create(JWTAuth $JWTAuth)
 	{
 		$rules = [

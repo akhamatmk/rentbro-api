@@ -64,6 +64,8 @@ $router->get('vendor/nickname/check', ['uses' => 'User\VendorController@nickname
 $router->get('vendor/{nickname}/profile', ['uses' => 'User\VendorController@profile' , 'middleware' => ['cors', 'jwtauth']]);
 $router->get('vendor/{nickname}/list_product', ['uses' => 'User\VendorController@list_product' , 'middleware' => ['cors', 'jwtauth']]);
 $router->get('vendor/{nickname}/location/first', ['uses' => 'User\VendorController@location_first' , 'middleware' => ['cors']]);
+$router->post('location/{nickname}/vendor/edit', ['uses' => 'User\VendorController@location_edit' , 'middleware' => ['cors', 'jwtauth']]);
+
 
 $router->post('vendor/create', ['uses' => 'User\VendorController@create' , 'middleware' => ['cors', 'jwtauth']]);
 $router->post('user/address/add', ['uses' => 'UserController@address_add' , 'middleware' => ['jwtauth']]);
