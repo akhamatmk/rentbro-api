@@ -63,4 +63,16 @@ class ProductController extends ApiController
 			['price', 'vendor',]
 		);
 	}
+
+	public function search()
+	{
+		$product = 	Product::select('products.*')
+				->where('name', 'like', '%' . $_GET['q'] . '%')
+				->get();
+
+		return $this->response()->success(
+			$product, [] , 200, new ProductTransformer(), 'collection', null, 
+			['price', 'vendor',]
+		);
+	}
 }

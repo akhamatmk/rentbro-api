@@ -96,7 +96,23 @@ class VendorController extends ApiController
         $vendorLocation->save();
 
         $token = $JWTAuth->getToken();
-        return $this->response()->success($vendorLocation, [] , 200, new VendorLocationTransformer(), 'item');
+        return $this->response()->success($vendorLocation, ['meta.token' => $token] , 200, new VendorLocationTransformer(), 'item');
+   }
+
+   public function edit_profile($nickname, JWTAuth $JWTAuth)
+   {
+        $user =  $JWTAuth->parseToken()->authenticate();
+        $token = $JWTAuth->fromUser($user);
+        $vendor = Vendor::where('nickname', $nickname)->where('user_ecommerce_id', $user->id)->first();
+        if(! $vendor)
+            return $this->response()->error(['Vendor Not Found'], 400);
+
+        $vendor->full_name = $this->request->full_name;
+        $vendor->motto = $this->request->motto;
+        $vendor->description = $this->request->description;
+        $vendor->save();
+
+        return $this->response()->success($vendor, ['meta.token' => $token]);
    }
 
 	public function create(JWTAuth $JWTAuth)
@@ -122,7 +138,7 @@ class VendorController extends ApiController
 		$vendor->motto = $this->request->motto;
 		$vendor->description = $this->request->description;
 		$vendor->logo = $this->request->logo;
-		$vendor->save();		
+		$vendor->save();
 
 		$vendorLocation = new VendorLocation;
 		$vendorLocation->vendor_id = $vendor->id;

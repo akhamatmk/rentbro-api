@@ -15,6 +15,12 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+
+$router->get('search/product', ['uses' => 'ProductController@search' , 'middleware' => ['cors']]);
+
+$router->get('wishlist', ['uses' => 'WishlistController@list' , 'middleware' => ['cors', 'jwtauth']]);
+$router->post('wishlist/add', ['uses' => 'WishlistController@add' , 'middleware' => ['cors', 'jwtauth']]);
+
 $router->get('test', 'ExampleController@tes');
 $router->post('product/option/multiple', 'ProductOptionController@multiple');
 
@@ -66,8 +72,8 @@ $router->get('vendor/{nickname}/list_product', ['uses' => 'User\VendorController
 $router->get('vendor/{nickname}/location/first', ['uses' => 'User\VendorController@location_first' , 'middleware' => ['cors']]);
 $router->post('location/{nickname}/vendor/edit', ['uses' => 'User\VendorController@location_edit' , 'middleware' => ['cors', 'jwtauth']]);
 
-
 $router->post('vendor/create', ['uses' => 'User\VendorController@create' , 'middleware' => ['cors', 'jwtauth']]);
+$router->post('vendor/{nickname}/edit/profile', ['uses' => 'User\VendorController@edit_profile' , 'middleware' => ['cors', 'jwtauth']]);
 $router->post('user/address/add', ['uses' => 'UserController@address_add' , 'middleware' => ['jwtauth']]);
 $router->get('user/address', ['uses' => 'UserController@list_address' , 'middleware' => ['jwtauth']]);
 $router->get('user/address/{id}', ['uses' => 'UserController@detail_address' , 'middleware' => ['jwtauth']]);
