@@ -16,6 +16,9 @@ $router->get('/', function () use ($router) {
 });
 
 
+
+$router->get('category/product/{alias}', ['uses' => 'ProductController@byCategory' , 'middleware' => ['cors']]);
+$router->get('category', ['uses' => 'CategoryController@index' , 'middleware' => ['cors']]);
 $router->get('search/product', ['uses' => 'ProductController@search' , 'middleware' => ['cors']]);
 
 $router->get('wishlist', ['uses' => 'WishlistController@list' , 'middleware' => ['cors', 'jwtauth']]);
@@ -45,7 +48,6 @@ $router->post('user/register', 'User\RegisterController@create');
 $router->post('user/register/{provider}', 'User\RegisterController@checkOtherApps');
 $router->post('user/login', 'User\LoginController@check');
 $router->post('user/login/with/{provider}', 'User\LoginController@checkOtherApps');
-$router->get('category', 'CategoryController@index');
 $router->post('shop/register', ['uses' => 'User\ShopController@register' , 'middleware' => ['jwtauth']]);
 $router->get('user/info', ['uses' => 'UserController@info' , 'middleware' => ['jwtauth']]);
 $router->post('vendor/{nickname}/product/store', ['uses' => 'User\VendorController@product_add' , 'middleware' => ['cors', 'jwtauth']]);

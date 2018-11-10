@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 use App\Transformers\ProductTransformer;
 use Illuminate\Http\Request;
 use Rentalbro\Models\Mysql\Product;
+use Rentalbro\Models\Mysql\Category;
 use Rentalbro\Models\Mysql\Chart;
+use Rentalbro\Models\Mysql\ProductCategory;
 use Tymon\JWTAuth\JWTAuth;
 
 class ProductController extends ApiController
@@ -62,6 +64,38 @@ class ProductController extends ApiController
 			$product, [] , 200, new ProductTransformer(), 'collection', null, 
 			['price', 'vendor',]
 		);
+	}
+
+	public function byCategory($alias)
+	{
+		$category = Category::select('id', 'parent_id')->where('alias', $alias)->first();
+		if(! $category)
+			return $this->response()->success([]);
+		
+		$c[] = $category->id;
+		if($category->parent_id == null)
+		{
+			$category = Category::select('id')->where('parent_id', $category->id)->get();
+			foreach ($category as $key => $value) {
+				$c[] = $value->id;
+			}
+		}
+
+		$ProductCategory = ProductCategory::whereIn('category_id', $c)->get();
+		if(count($ProductCategory) < 1)
+			return $this->response()->success([]);	
+
+		foreach ($ProductCategory as $key => $value) {
+			$p[] = $value->product_id;
+		}
+
+		$product = Product::whereIn('id', $p)->get();
+
+		return $this->response()->success(
+			$product, [] , 200, new ProductTransformer(), 'collection', null, 
+			['price', 'vendor',]
+		);
+		
 	}
 
 	public function search()
